@@ -2,18 +2,52 @@
 
 <head>
 	<meta charset="utf-8">
+	<title>Search Engine Selector</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
 	<script>
 		// TODO: create a handler
-    window.addEventListener("load", function(){
-        // TODO: register the handler
-    });
+		function setSearchEngine() {
+			// console.log("setSearchEngine function ran.");
+			let engine = document.querySelector("input[name=engine]:checked");
+			let actionURL;
+			let actions = {
+				"google": "https://www.google.com/search",
+				"duckDuckGo": "https://duckduckgo.com/",
+				"bing": "https://www.bing.com/search",
+				"ask": "https://www.ask.com/web"
+			};
+			actionURL = actions[engine.value];
+			document.querySelector("form").setAttribute("action", actionURL);
+		}
+		window.addEventListener("load", function () {
+			let form = document.querySelector("form");
+			form.addEventListener("submit", setSearchEngine);
+		});
+
+		window.addEventListener("submit", function () {
+			let qInput = document.querySelector("input[name=q]");
+			let engineInput = document.querySelector("input[name=engine]");
+			if (qInput.value === "" || engineInput.value === "") {
+				console.log(qInput.value, engineInput.value);
+				alert("All fields are required!");
+				event.preventDefault();
+			}
+		});
 	</script>
 </head>
 
 <body>
-
-	<form id="searchForm">
-    <!-- TODO: add form elements -->
+	<img src="jea-search-engine-selector.png" alt="Cartoon person sitting at a desk using a computer. The title, Search Engine Selector, is in an arch above the person." height="200" id="searchEngineImage" class="center">
+	<form id="searchForm"> 
+		<!-- TODO: add form elements -->
+		<p>Look up any information using your favorite search engine!</p>
+		<label><input type="text" name="q"/></label>
+		<label><input type="radio" name="engine" value="google"/>Google</label>
+		<label><input type="radio" name="engine" value="duckDuckGo"/>DuckDuckGo</label>
+		<label><input type="radio" name="engine" value="bing"/>Bing</label>
+		<label><input type="radio" name="engine" value="ask"/>Ask</label>
+		<button value="Go!">Go!</button>
 	</form>
+	<div id="footer">LC101 Studio: HTTP and Forms. Created by Jea Parker.</div>
 
 </body>
